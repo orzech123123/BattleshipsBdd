@@ -3,7 +3,7 @@
     public class Ship
     {
         public bool[,] OccupiedCells { get; }
-        public ShipType Type { get; private set; }
+        public ShipType Type { get; }
 
         public Ship(bool[,] occupiedCells, ShipType type)
         {

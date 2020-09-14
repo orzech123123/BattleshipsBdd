@@ -48,5 +48,22 @@ namespace Battleships
 
             shipsToPlace.ForEach(ship => _ships.Add(ship));
         }
+
+        public void Draw()
+        {
+
+        }
+
+        public ShotResult Shot()
+        {
+            return ShotResult.Hit;
+        }
+    }
+
+    public enum ShotResult
+    {
+        Hit,
+        Miss,
+        Sink
     }
 }
