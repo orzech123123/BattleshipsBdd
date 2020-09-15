@@ -74,7 +74,7 @@ namespace Battleships
                 }
             });
 
-            Console.WriteLine(builder.ToString());
+            Console.Write(builder.ToString());
         }
 
         public bool GameIsOver => _ships.All(ship => ship.HasSunk());

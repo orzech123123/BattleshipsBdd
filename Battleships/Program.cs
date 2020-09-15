@@ -20,7 +20,7 @@ namespace Battleships
                 Console.WriteLine(shotResult);
             }
 
-            Console.ReadKey();
+            Console.WriteLine("Game is over. All ships have sunk!");
         }
     }
 }
