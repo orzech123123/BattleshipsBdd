@@ -1,24 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Battleships
 {
     public class Grid
     {
-        public int Rows { get; }
-        public int Cols { get; }
-        public IEnumerable<Ship> Ships => _ships;
-
+        private readonly int _rows;
+        private readonly int _cols;
         private readonly ShipFactory _shipFactory;
         private readonly IList<Ship> _ships = new List<Ship>();
         private readonly bool[,] _mishitCells;
 
+        public IEnumerable<Ship> Ships => _ships.ToArray();
+
         public Grid(int rows, int cols)
         {
-            Rows = rows;
-            Cols = cols;
+            _rows = rows;
+            _cols = cols;
             _shipFactory = new ShipFactory(rows, cols);
             _mishitCells = new bool[rows, cols];
         }
@@ -54,11 +56,11 @@ namespace Battleships
             shipsToPlace.ForEach(ship => _ships.Add(ship));
         }
 
-        public void Draw()
+        public override string ToString()
         {
             var builder = new StringBuilder();
 
-            CollectionsHelper.IterateFromZeroTo(Rows, Cols, (row, col) =>
+            CollectionsHelper.IterateFromZeroTo(_rows, _cols, (row, col) =>
             {
                 var gridCell = _ships
                     .SingleOrDefault(ship => ship.OccupiedCells[row, col] != null)
@@ -68,39 +70,59 @@ namespace Battleships
                                 _mishitCells[row, col] ? "*" :
                                     "-");
 
-                if (col == Cols - 1)
+                if (col == _cols - 1)
                 {
                     builder.AppendLine();
                 }
             });
 
-            Console.Write(builder.ToString());
+            return builder.ToString();
         }
 
         public bool GameIsOver => _ships.All(ship => ship.HasSunk());
 
-        public ShotResult Shot(int row, int col)
+        public ShotResult Shot(string coords)
         {
-            var shotShip = _ships
+            var (row, col) = ParseCoords(coords);
+
+            var hitShip = _ships
                 .SingleOrDefault(ship => ship.OccupiedCells[row, col] != null);
 
-            var gridCell = shotShip
+            var hitGridCell = hitShip
                 ?.OccupiedCells[row, col];
 
-            if (!gridCell.HasValue || gridCell == GridCellState.WreckSegment)
+            if (!hitGridCell.HasValue || hitGridCell == GridCellState.WreckSegment)
             {
                 _mishitCells[row, col] = true;
                 return ShotResult.Miss;
             }
 
-            shotShip.Damage(row, col);
+            hitShip.Damage(row, col);
 
-            if (shotShip.HasSunk())
+            return hitShip.HasSunk() ? ShotResult.Sunk : ShotResult.Hit;
+        }
+
+        private (int row, int col) ParseCoords(string coords)
+        {
+            const string pattern = "^[A-Za-z]\\d+$";
+
+            if (!Regex.IsMatch(coords, pattern))
             {
-                return ShotResult.Sunk;
+                throw new ArgumentException(nameof(coords));
             }
 
-            return ShotResult.Hit;
+            var row = int.Parse(coords.Remove(0, 1));
+            var col = char.ToUpper(coords[0]) - 64;
+
+            row--;
+            col--;
+
+            if (row >= _rows || col >= _cols)
+            {
+                throw new ArgumentException(nameof(coords));
+            }
+
+            return (row, col);
         }
     }
 

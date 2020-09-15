@@ -6,18 +6,25 @@ namespace Battleships
     {
         static void Main(string[] args)
         {
-            var grid = new Grid(20, 10);
-            grid.PlaceShips(1, 0);
-            grid.Draw();
+            var grid = new Grid(8, 12);
+            grid.PlaceShips(1, 1);
+            Console.Write(grid);
 
             while (!grid.GameIsOver)
             {
-                var row = Convert.ToInt32(Console.ReadLine());
-                var col = Convert.ToInt32(Console.ReadLine());
-                var shotResult = grid.Shot(row, col);
+                Console.Write("Shot coords: ");
+                var shotCoords = Console.ReadLine();
 
-                grid.Draw();
-                Console.WriteLine(shotResult);
+                try
+                {
+                    var shotResult = grid.Shot(shotCoords);
+                    Console.Write(grid);
+                    Console.WriteLine(shotResult);
+                }
+                catch (ArgumentException)
+                {
+                    Console.WriteLine("Invalid coords provided. Enter eg. A5 for first column and fifth row on grid");
+                }
             }
 
             Console.WriteLine("Game is over. All ships have sunk!");
