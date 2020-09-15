@@ -65,9 +65,15 @@ namespace Battleships
                     .SingleOrDefault(ship => ship.OccupiedCells[row, col] != null)
                     ?.OccupiedCells[row, col];
 
-                builder.Append(gridCell.HasValue ? (gridCell == GridCellState.ShipSegment ? "o" : "x") :
+                //NOTE: this append can be used for debug purposes (instead this one below), in order to reveal ships
+                /*
+                 builder.Append(gridCell.HasValue ? (gridCell == GridCellState.ShipSegment ? "o" : "x") :
                                 _mishitCells[row, col] ? "*" :
                                     "-");
+                */
+                builder.Append(gridCell == GridCellState.WreckSegment ? "x" :
+                    _mishitCells[row, col] ? "*" :
+                        "-");
 
                 if (col == _cols - 1)
                 {
