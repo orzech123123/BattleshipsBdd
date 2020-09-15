@@ -13,12 +13,14 @@ namespace Battleships
 
         private readonly ShipFactory _shipFactory;
         private readonly IList<Ship> _ships = new List<Ship>();
+        private readonly bool[,] _mishitCells;
 
         public Grid(int width, int height)
         {
             Width = width;
             Height = height;
             _shipFactory = new ShipFactory(width, height);
+            _mishitCells = new bool[width, height];
         }
 
         public void PlaceShips(int battleshipsCount, int destroyersCount)
@@ -59,10 +61,13 @@ namespace Battleships
             CollectionsHelper.IterateFromZeroTo(Width, Height, (row, col) =>
             {
                 var gridCell = _ships
-                    .FirstOrDefault(ship => ship.OccupiedCells[row, col] != null)?
-                    .OccupiedCells[row, col];
+                    .SingleOrDefault(ship => ship.OccupiedCells[row, col] != null)
+                    ?.OccupiedCells[row, col];
 
-                builder.Append(!gridCell.HasValue ? "-" : (gridCell == GridCellState.ShipSegment ? "o" : "x"));
+                builder.Append(_mishitCells[row, col] ? "*" :
+                                    !gridCell.HasValue ? "-" :
+                                        (gridCell == GridCellState.ShipSegment ? "o" :
+                                            "x"));
 
                 if (col == Width - 1)
                 {
@@ -73,8 +78,29 @@ namespace Battleships
             Console.WriteLine(builder.ToString());
         }
 
-        public ShotResult Shot()
+        public bool GameIsOver => _ships.All(ship => ship.HasSunk());
+
+        public ShotResult Shot(int row, int col)
         {
+            var shotShip = _ships
+                .SingleOrDefault(ship => ship.OccupiedCells[row, col] != null);
+
+            var gridCell = shotShip
+                ?.OccupiedCells[row, col];
+
+            if (!gridCell.HasValue || gridCell == GridCellState.WreckSegment)
+            {
+                _mishitCells[row, col] = true;
+                return ShotResult.Miss;
+            }
+
+            shotShip.Damage(row, col);
+
+            if (shotShip.HasSunk())
+            {
+                return ShotResult.Sunk;
+            }
+
             return ShotResult.Hit;
         }
     }
@@ -89,6 +115,6 @@ namespace Battleships
     {
         Hit,
         Miss,
-        Sink
+        Sunk
     }
 }

@@ -31,7 +31,7 @@ namespace Battleships
             var colStart = _rnd.Next(0, _gridHeight - segmentsCount);
             var horizontal = _rnd.NextDouble() > 0.5;
 
-            var shipOccupiedCells = new GridCellState?[10, 10];
+            var shipOccupiedCells = new GridCellState?[_gridWidth, _gridHeight];
 
             for (var i = 0; i < segmentsCount; i++)
             {

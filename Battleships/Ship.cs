@@ -9,6 +9,26 @@
             OccupiedCells = occupiedCells;
         }
 
+        public void Damage(int row, int col)
+        {
+            OccupiedCells[row, col] = GridCellState.WreckSegment;
+        }
+
+        public bool HasSunk()
+        {
+            var hasSunk = true;
+
+            CollectionsHelper.IterateThrough(OccupiedCells, (occupiedCell, row, col) =>
+            {
+                if (occupiedCell.HasValue && occupiedCell != GridCellState.WreckSegment)
+                {
+                    hasSunk = false;
+                }
+            });
+
+            return hasSunk;
+        }
+
         public bool IsColliding(Ship other)
         {
             if (other == this)
