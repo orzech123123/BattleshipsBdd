@@ -7,20 +7,20 @@ namespace Battleships
 {
     public class Grid
     {
-        public int Width { get; }
-        public int Height { get; }
+        public int Rows { get; }
+        public int Cols { get; }
         public IEnumerable<Ship> Ships => _ships;
 
         private readonly ShipFactory _shipFactory;
         private readonly IList<Ship> _ships = new List<Ship>();
         private readonly bool[,] _mishitCells;
 
-        public Grid(int width, int height)
+        public Grid(int rows, int cols)
         {
-            Width = width;
-            Height = height;
-            _shipFactory = new ShipFactory(width, height);
-            _mishitCells = new bool[width, height];
+            Rows = rows;
+            Cols = cols;
+            _shipFactory = new ShipFactory(rows, cols);
+            _mishitCells = new bool[rows, cols];
         }
 
         public void PlaceShips(int battleshipsCount, int destroyersCount)
@@ -58,7 +58,7 @@ namespace Battleships
         {
             var builder = new StringBuilder();
 
-            CollectionsHelper.IterateFromZeroTo(Width, Height, (row, col) =>
+            CollectionsHelper.IterateFromZeroTo(Rows, Cols, (row, col) =>
             {
                 var gridCell = _ships
                     .SingleOrDefault(ship => ship.OccupiedCells[row, col] != null)
@@ -68,7 +68,7 @@ namespace Battleships
                                 _mishitCells[row, col] ? "*" :
                                     "-");
 
-                if (col == Width - 1)
+                if (col == Cols - 1)
                 {
                     builder.AppendLine();
                 }

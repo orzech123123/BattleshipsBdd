@@ -6,7 +6,7 @@ namespace Battleships
     {
         static void Main(string[] args)
         {
-            var grid = new Grid(10, 10);
+            var grid = new Grid(20, 10);
             grid.PlaceShips(1, 0);
             grid.Draw();
 

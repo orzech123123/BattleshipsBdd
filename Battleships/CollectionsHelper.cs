@@ -7,8 +7,8 @@ namespace Battleships
     {
         public static void IterateThrough<T>(T[,] collection, Action<T, int, int> action)
         {
-            for (var row = 0; row < collection.GetLength(1); row++)
-            for (var col = 0; col < collection.GetLength(0); col++)
+            for (var row = 0; row < collection.GetLength(0); row++)
+            for (var col = 0; col < collection.GetLength(1); col++)
                 action(collection[row, col], row, col);
         }
 

@@ -1,24 +1,28 @@
-﻿namespace Battleships
+﻿using System;
+
+namespace Battleships
 {
     public class Ship
     {
-        public GridCellState?[,] OccupiedCells { get; }
+        private readonly GridCellState?[,] _occupiedCells;
 
         public Ship(GridCellState?[,] occupiedCells)
         {
-            OccupiedCells = occupiedCells;
+            _occupiedCells = occupiedCells;
         }
+
+        public GridCellState?[,] OccupiedCells => _occupiedCells.Clone() as GridCellState?[,];
 
         public void Damage(int row, int col)
         {
-            OccupiedCells[row, col] = GridCellState.WreckSegment;
+            _occupiedCells[row, col] = GridCellState.WreckSegment;
         }
 
         public bool HasSunk()
         {
             var hasSunk = true;
 
-            CollectionsHelper.IterateThrough(OccupiedCells, (occupiedCell, row, col) =>
+            CollectionsHelper.IterateThrough(_occupiedCells, (occupiedCell, row, col) =>
             {
                 if (occupiedCell.HasValue && occupiedCell != GridCellState.WreckSegment)
                 {
@@ -38,10 +42,10 @@
 
             var isColliding = false;
 
-            CollectionsHelper.IterateThrough(OccupiedCells, (occupiedCell, row, col) =>
+            CollectionsHelper.IterateThrough(_occupiedCells, (occupiedCell, row, col) =>
             {
                 if (occupiedCell.HasValue &&
-                    other.OccupiedCells[row, col].HasValue)
+                    other._occupiedCells[row, col].HasValue)
                 {
                     isColliding = true;
                 }
