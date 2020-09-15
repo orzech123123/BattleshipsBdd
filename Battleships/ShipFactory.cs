@@ -17,28 +17,28 @@ namespace Battleships
 
         public Ship CreateBattleship()
         {
-            return CreateShip(5, ShipType.Battleship);
+            return CreateShip(5);
         }
 
         public Ship CreateDestroyer()
         {
-            return CreateShip(4, ShipType.Destroyer);
+            return CreateShip(4);
         }
 
-        private Ship CreateShip(int segmentsCount, ShipType shipType)
+        private Ship CreateShip(int segmentsCount)
         {
             var rowStart = _rnd.Next(0, _gridWidth - segmentsCount);
             var colStart = _rnd.Next(0, _gridHeight - segmentsCount);
             var horizontal = _rnd.NextDouble() > 0.5;
 
-            var shipSegments = new bool[10, 10];
+            var shipOccupiedCells = new GridCellState?[10, 10];
 
             for (var i = 0; i < segmentsCount; i++)
             {
-                shipSegments[rowStart + (horizontal ? 0 : i), colStart + (horizontal ? i : 0)] = true;
+                shipOccupiedCells[rowStart + (horizontal ? 0 : i), colStart + (horizontal ? i : 0)] = GridCellState.ShipSegment;
             }
 
-            return new Ship(shipSegments, shipType);
+            return new Ship(shipOccupiedCells);
         }
     }
 }

@@ -21,8 +21,8 @@ namespace Battleships.Specs
         private void Then_On_The_Grid_There_Are_One_Battleship_And_Two_Destroyers()
         {
             _grid.Ships.Should().HaveCount(3);
-            _grid.Ships.Where(ship => ship.Type == ShipType.Battleship).Should().HaveCount(1);
-            _grid.Ships.Where(ship => ship.Type == ShipType.Destroyer).Should().HaveCount(2);
+            _grid.Ships.Where(ship => ship.OccupiedCells.Cast<GridCellState?>().Count(cell => cell.HasValue) == 5).Should().HaveCount(1);
+            _grid.Ships.Where(ship => ship.OccupiedCells.Cast<GridCellState?>().Count(cell => cell.HasValue) == 4).Should().HaveCount(2);
         }
     }
 }

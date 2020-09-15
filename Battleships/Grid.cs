@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace Battleships
 {
@@ -51,13 +54,34 @@ namespace Battleships
 
         public void Draw()
         {
+            var builder = new StringBuilder();
 
+            for (var row = 0; row < Width; row++)
+            {
+                for (var col = 0; col < Height; col++)
+                {
+                    var gridCell = _ships
+                        .FirstOrDefault(ship => ship.OccupiedCells[row, col] != null)?
+                        .OccupiedCells[row, col];
+
+                    builder.Append(!gridCell.HasValue ? "-" : (gridCell == GridCellState.ShipSegment ? "o" : "x"));
+                }
+                builder.AppendLine();
+            }
+
+            Console.WriteLine(builder.ToString());
         }
 
         public ShotResult Shot()
         {
             return ShotResult.Hit;
         }
+    }
+
+    public enum GridCellState
+    {
+        ShipSegment,
+        WreckSegment
     }
 
     public enum ShotResult

@@ -2,13 +2,11 @@
 {
     public class Ship
     {
-        public bool[,] OccupiedCells { get; }
-        public ShipType Type { get; }
+        public GridCellState?[,] OccupiedCells { get; }
 
-        public Ship(bool[,] occupiedCells, ShipType type)
+        public Ship(GridCellState?[,] occupiedCells)
         {
             OccupiedCells = occupiedCells;
-            Type = type;
         }
 
         public bool IsColliding(Ship other)
@@ -22,7 +20,8 @@
 
             CollectionsHelper.IterateThrough(OccupiedCells, (cellOccupied, row, col) =>
             {
-                if (cellOccupied && other.OccupiedCells[row, col])
+                if (cellOccupied.HasValue &&
+                    other.OccupiedCells[row, col].HasValue)
                 {
                     isColliding = true;
                 }
@@ -30,11 +29,5 @@
 
             return isColliding;
         }
-    }
-
-    public enum ShipType
-    {
-        Battleship,
-        Destroyer
     }
 }
