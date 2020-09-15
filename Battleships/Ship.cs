@@ -18,9 +18,9 @@
 
             var isColliding = false;
 
-            CollectionsHelper.IterateThrough(OccupiedCells, (cellOccupied, row, col) =>
+            CollectionsHelper.IterateThrough(OccupiedCells, (occupiedCell, row, col) =>
             {
-                if (cellOccupied.HasValue &&
+                if (occupiedCell.HasValue &&
                     other.OccupiedCells[row, col].HasValue)
                 {
                     isColliding = true;

@@ -56,18 +56,19 @@ namespace Battleships
         {
             var builder = new StringBuilder();
 
-            for (var row = 0; row < Width; row++)
+            CollectionsHelper.IterateFromZeroTo(Width, Height, (row, col) =>
             {
-                for (var col = 0; col < Height; col++)
-                {
-                    var gridCell = _ships
-                        .FirstOrDefault(ship => ship.OccupiedCells[row, col] != null)?
-                        .OccupiedCells[row, col];
+                var gridCell = _ships
+                    .FirstOrDefault(ship => ship.OccupiedCells[row, col] != null)?
+                    .OccupiedCells[row, col];
 
-                    builder.Append(!gridCell.HasValue ? "-" : (gridCell == GridCellState.ShipSegment ? "o" : "x"));
+                builder.Append(!gridCell.HasValue ? "-" : (gridCell == GridCellState.ShipSegment ? "o" : "x"));
+
+                if (col == Width - 1)
+                {
+                    builder.AppendLine();
                 }
-                builder.AppendLine();
-            }
+            });
 
             Console.WriteLine(builder.ToString());
         }

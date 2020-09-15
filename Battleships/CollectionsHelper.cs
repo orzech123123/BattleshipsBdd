@@ -18,5 +18,12 @@ namespace Battleships
             foreach (var other in collection)
                 action(element, other);
         }
+
+        public static void IterateFromZeroTo(int firstDimensionMax, int secondDimensionMax, Action<int, int> action)
+        {
+            for (var dim1 = 0; dim1 < firstDimensionMax; dim1++)
+            for (var dim2 = 0; dim2 < secondDimensionMax; dim2++)
+                action(dim1, dim2);
+        }
     }
 }
