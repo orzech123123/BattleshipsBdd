@@ -1,5 +1,4 @@
 ﻿using Battleships.Specs;
-using LightBDD.Core.Configuration;
 using LightBDD.NUnit3;
 using NUnit.Framework;
 

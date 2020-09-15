@@ -6,8 +6,8 @@ namespace Battleships
     {
         static void Main(string[] args)
         {
-            var grid = new Grid(8, 12);
-            grid.PlaceShips(1, 1);
+            var grid = new Grid(10, 10);
+            grid.PlaceShips(1, 2);
             Console.Write(grid);
 
             while (!grid.GameIsOver)

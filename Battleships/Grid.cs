@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -94,7 +93,7 @@ namespace Battleships
             if (!hitGridCell.HasValue || hitGridCell == GridCellState.WreckSegment)
             {
                 _mishitCells[row, col] = true;
-                return ShotResult.Miss;
+                return ShotResult.Mishit;
             }
 
             hitShip.Damage(row, col);
@@ -135,7 +134,7 @@ namespace Battleships
     public enum ShotResult
     {
         Hit,
-        Miss,
+        Mishit,
         Sunk
     }
 }

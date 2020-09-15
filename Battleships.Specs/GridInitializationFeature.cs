@@ -8,9 +8,9 @@ namespace Battleships.Specs
     [FeatureDescription(@"In order to have ability to play game I want to initialize grid with randomly placed warships")]
     public partial class GridInitializationFeature
     {
-        [Label("One Battleship and Two Destroyers")]
+        [Label("One Battleship and Two Destroyers On Grid")]
         [Scenario]
-        public void One_Battleship_And_Two_Destroyers()
+        public void One_Battleship_And_Two_Destroyers_On_Grid()
         {
             Runner.RunScenario(
                 Given_New_Grid,

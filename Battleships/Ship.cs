@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Battleships
+﻿namespace Battleships
 {
     public class Ship
     {
