@@ -1,25 +1,26 @@
 Battleships :ship:
 ============
 
-A turn-based strategy game in Blazor
-
-[DEMO](http://test-orzech.azurewebsites.net/)
+Simple version of the game Battleships.
+Allows a single human player to play a one-sided game of Battleships placed by the computer.
 
 ## Get Started
 
 Before running the game prepare your environment. Ensure that you have installed:
-* [.NET Core 3.0 Preview SDK release](https://dotnet.microsoft.com/download/dotnet-core/3.0)
-* [Visual Studio preview](https://visualstudio.com/vs/preview)
-* Blazor templates ```dotnet new -i Microsoft.AspNetCore.Blazor.Templates::3.0.0-preview9.19424.4```
+* [.NET Core 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1)
 
-(source: https://docs.microsoft.com/pl-pl/aspnet/core/blazor/get-started?view=aspnetcore-3.0)
+## Run and test application
 
-## Run to the battle
-
-In order to run the game you have two options:
-* command line (in directory containing Battleships.csproj file): ```dotnet run``` and follow the instructions 
-* via Visual Studio: ```Battleships.sln -> F5```
+In order to play the game you can use console:
+* in directory containing Battleships.csproj file): ```dotnet run``` and follow the instructions 
 
 Random gameplay:
 
-![Image](https://github.com/orzech123123/battleships/blob/master/Battleships/battleships-gameplay.png?raw=true)
+![Image](https://raw.githubusercontent.com/orzech123123/BattleshipsBdd/master/gameplay-example.PNG?raw=true)
+
+In order to run tests of the application you can use console:
+* run tests for the solution in app root drectory: ```dotnet test```
+
+Example tests results:
+
+![Image](https://raw.githubusercontent.com/orzech123123/BattleshipsBdd/master/tests-run-example.PNG?raw=true)
