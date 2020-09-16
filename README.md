@@ -1,4 +1,4 @@
-Battleships :ship:
+Battleships 
 ============
 
 Simple version of the game Battleships.
@@ -12,7 +12,7 @@ Before running the game prepare your environment. Ensure that you have installed
 ## Run and test application
 
 In order to play the game you can use console:
-* in directory containing Battleships.csproj file): ```dotnet run``` and follow the instructions 
+* in directory containing Battleships.csproj file: ```dotnet run``` and follow the instructions 
 
 Random gameplay:
 
